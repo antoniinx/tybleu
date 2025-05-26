@@ -13,6 +13,10 @@ const canvas = document.getElementById('canvas');
       height = window.innerHeight;
       canvas.width = width;
       canvas.height = height;
+      
+      // Adjust cell size based on screen width
+      cellSize = width < 768 ? (width < 480 ? 6 : 5) : 4;
+      
       cols = Math.floor(width / cellSize);
       rows = Math.floor(height / cellSize);
     }
@@ -102,6 +106,7 @@ const canvas = document.getElementById('canvas');
 
     window.addEventListener('resize', () => {
       setupCanvas();
+      init(); // Reinitialize on resize to adjust grid size
     });
 
     init();
