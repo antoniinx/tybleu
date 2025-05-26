@@ -1,31 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tybl.eu</title>
-    <link rel="icon" type="image/svg+xml" href="images/icon.svg">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>tybl.eu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="icon" href="/images/icon.svg">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="noise"></div>
-    <nav>
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">tybl.eu</a>
-            <div class="nav-links">
-                <a href="index.html" class="active">Home</a>
-                <a href="contact.html">Contact</a>
-            </div>
-        </div>
-    </nav>
-    <div class="container">
-        <h1 class="glitch" data-text="tybl.eu">tybl.eu</h1>
-        <p class="subtitle">Coming soon...</p>
-        <p class="subtitle">contact@tybl.eu</p>
+  <div id="topbar">
+    <div class="control-group">
+      <span>Mravenci:</span>
+      <button onclick="changeValue('antCount', -1)">◄</button>
+      <input id="antCount" type="number" value="1" min="1" max="99" />
+      <button onclick="changeValue('antCount', 1)">►</button>
     </div>
-    <script src="script.js"></script>
+    <div class="control-group">
+      <span>Barvy:</span>
+      <button onclick="changeValue('colorCount', -1)">◄</button>
+      <input id="colorCount" type="number" value="2" min="2" max="10" />
+      <button onclick="changeValue('colorCount', 1)">►</button>
+    </div>
+    <div class="control-group speed" id="speedGroup">
+      <span>Rychlost:</span>
+      <button onclick="changeValue('speed', -1)">◄</button>
+      <input id="speed" type="number" value="5" min="1" max="20" />
+      <button class="right-button" onclick="changeValue('speed', 1)">►</button>
+    </div>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+<script src="sript.js"></script>
 </body>
-</html> 
+</html>
