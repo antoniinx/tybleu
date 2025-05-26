@@ -8,29 +8,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="topbar">
-    <div class="control-group">
-      <span>Mravenci:</span>
-      <button onclick="changeValue('antCount', -1)">◄</button>
-      <input id="antCount" type="number" value="1" min="1" max="99" />
-      <button onclick="changeValue('antCount', 1)">►</button>
-    </div>
-    <div class="control-group">
-      <span>Barvy:</span>
-      <button onclick="changeValue('colorCount', -1)">◄</button>
-      <input id="colorCount" type="number" value="2" min="2" max="10" />
-      <button onclick="changeValue('colorCount', 1)">►</button>
-    </div>
-    <div class="control-group speed" id="speedGroup">
-      <span>Rychlost:</span>
-      <button onclick="changeValue('speed', -1)">◄</button>
-      <input id="speed" type="number" value="5" min="1" max="20" />
-      <button class="right-button" onclick="changeValue('speed', 1)">►</button>
-    </div>
-  </div>
-
   <canvas id="canvas"></canvas>
-
-<script src="sript.js"></script>
+  <script src="sript.js"></script>
 </body>
 </html>

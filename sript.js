@@ -4,9 +4,9 @@ const canvas = document.getElementById('canvas');
     let width, height, cols, rows, grid, ants = [], cellSize = 5;
     let colors = [];
     let directions = [[0, -1], [1, 0], [0, 1], [-1, 0]];
-    let antCount = 1;
-    let colorCount = 2;
-    let speed = 5;
+    let antCount = 6;
+    let colorCount = 8;
+    let speed = 20;
 
     function setupCanvas() {
       width = window.innerWidth;
@@ -14,8 +14,8 @@ const canvas = document.getElementById('canvas');
       canvas.width = width;
       canvas.height = height;
       
-      // Adjust cell size based on screen width
-      cellSize = width < 768 ? (width < 480 ? 6 : 5) : 4;
+      // Adjust cell size based on screen width for better mobile visibility
+      cellSize = width < 768 ? (width < 480 ? 8 : 6) : 4;
       
       cols = Math.floor(width / cellSize);
       rows = Math.floor(height / cellSize);
