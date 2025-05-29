@@ -96,3 +96,51 @@
         }
       }
     }
+
+    .video-section {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 1000;
+    }
+
+    .video-link {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .video-link:hover {
+      transform: scale(1.05);
+    }
+
+    .video-link:hover .animated-title {
+      transform: scale(1.2);
+    }
+
+    .video-thumbnail {
+      max-width: 560px;
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .animated-title {
+      font-family: "coolvetica", sans-serif;
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      animation: colorChange 2s infinite;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    @keyframes colorChange {
+      0% { color: #ff0000; }
+      25% { color: #00ff00; }
+      50% { color: #0000ff; }
+      75% { color: #ffff00; }
+      100% { color: #ff0000; }
+    }
