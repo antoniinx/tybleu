@@ -171,13 +171,18 @@ body {
   .gallery {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
+
+  .silvestr-password-area {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .silvestr-label {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
 }
 
-/* No more global login styles needed */
-/* Remove the following styles: */
-/* .login-overlay, .login-form, .login-form h2, .login-form input, .login-form input:focus, .login-form button, .login-form button:hover, .error-message */
-
-// Add styles for the new form on fotky.html
 .gallery-section input[type="password"],
 .gallery-section button {
   padding: 0.8rem;
@@ -215,4 +220,14 @@ body {
   margin-top: 1rem;
   font-size: 1rem;
   display: none;
+}
+
+.silvestr-password-area {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.silvestr-label {
+  font-size: 1rem;
+  margin-right: 0.5rem;
 }
