@@ -37,32 +37,28 @@ function showLoginForm() {
     loginForm.innerHTML = `
         <div class="login-form">
             <h2>Přístup pouze pro členy</h2>
-            <div class="password-input-group">
-                <input type="password" id="password" placeholder="Zadejte heslo">
-                <button id="togglePassword" class="toggle-password">👁️</button>
-            </div>
+            <input type="password" id="password" placeholder="Zadejte heslo">
             <button onclick="handleLogin()">Přihlásit</button>
             <div id="error-message" class="error-message"></div>
         </div>
     `;
     document.body.appendChild(loginForm);
 
-    // Add event listener for password toggle button
-    document.getElementById('togglePassword').addEventListener('click', togglePasswordVisibility);
+    // No event listener needed for password toggle button anymore
 }
 
-// Toggle password visibility
-function togglePasswordVisibility() {
-    const passwordInput = document.getElementById('password');
-    const toggleButton = document.getElementById('togglePassword');
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleButton.textContent = '🙈'; // Hide icon
-    } else {
-        passwordInput.type = 'password';
-        toggleButton.textContent = '👁️'; // Show icon
-    }
-}
+// Toggle password visibility (no longer used)
+// function togglePasswordVisibility() {
+//     const passwordInput = document.getElementById('password');
+//     const toggleButton = document.getElementById('togglePassword');
+//     if (passwordInput.type === 'password') {
+//         passwordInput.type = 'text';
+//         toggleButton.textContent = '🙈'; // Hide icon
+//     } else {
+//         passwordInput.type = 'password';
+//         toggleButton.textContent = '👁️'; // Show icon
+//     }
+// }
 
 // Handle login
 function handleLogin() {
