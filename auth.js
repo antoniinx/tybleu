@@ -1,7 +1,16 @@
+// Hide all content initially
+function hideContent() {
+    const content = document.querySelector('main');
+    if (content) {
+        content.style.display = 'none';
+    }
+}
+
 // Check if user is already authenticated
 function checkAuth() {
     const isAuthenticated = localStorage.getItem('isAuthenticated');
     if (!isAuthenticated) {
+        hideContent();
         showLoginForm();
     }
 }
@@ -15,6 +24,7 @@ function showLoginForm() {
             <h2>Přístup pouze pro členy</h2>
             <input type="password" id="password" placeholder="Zadejte heslo">
             <button onclick="handleLogin()">Přihlásit</button>
+            <div id="error-message" class="error-message"></div>
         </div>
     `;
     document.body.appendChild(loginForm);
@@ -23,11 +33,18 @@ function showLoginForm() {
 // Handle login
 function handleLogin() {
     const password = document.getElementById('password').value;
-    if (password === 'sedlcany1´') {
+    const errorMessage = document.getElementById('error-message');
+    
+    if (password === 'sedlcany1') {
         localStorage.setItem('isAuthenticated', 'true');
         document.querySelector('.login-overlay').remove();
+        const content = document.querySelector('main');
+        if (content) {
+            content.style.display = 'block';
+        }
     } else {
-        alert('Nesprávné heslo!');
+        errorMessage.textContent = 'Špatné heslo!';
+        errorMessage.style.display = 'block';
     }
 }
 

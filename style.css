@@ -180,7 +180,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -229,8 +229,16 @@ body {
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  width: 100%;
 }
 
 .login-form button:hover {
   background-color: #cc0000;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-top: 1rem;
+  font-size: 1rem;
+  display: none;
 }
