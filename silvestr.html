@@ -7,6 +7,24 @@
   <link rel="icon" href="/images/icon.svg">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+  <style>
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-thumbnail::after {
+      content: "▶";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2em;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+  </style>
 </head>
 <body>
   <nav class="main-nav">
@@ -171,21 +189,37 @@
           <img src="/images/silvestr/PICT0112.JPG" alt="Silvestr 2024" loading="lazy">
         </a>
         <a href="/images/silvestr/IIKN1596.MP4" data-fancybox="gallery" data-type="video" data-caption="Silvestr 2024">
-          <img src="/images/silvestr/PICT0112.JPG" alt="Silvestr 2024 Video" loading="lazy">
+          <video class="video-thumbnail" muted>
+            <source src="/images/silvestr/IIKN1596.MP4" type="video/mp4">
+          </video>
         </a>
         <a href="/images/silvestr/AXMI7359.MP4" data-fancybox="gallery" data-type="video" data-caption="Silvestr 2024">
-          <img src="/images/silvestr/PICT0112.JPG" alt="Silvestr 2024 Video" loading="lazy">
+          <video class="video-thumbnail" muted>
+            <source src="/images/silvestr/AXMI7359.MP4" type="video/mp4">
+          </video>
         </a>
         <a href="/images/silvestr/GEVQ0744.MP4" data-fancybox="gallery" data-type="video" data-caption="Silvestr 2024">
-          <img src="/images/silvestr/PICT0112.JPG" alt="Silvestr 2024 Video" loading="lazy">
+          <video class="video-thumbnail" muted>
+            <source src="/images/silvestr/GEVQ0744.MP4" type="video/mp4">
+          </video>
         </a>
         <a href="/images/silvestr/XMDK3511.MOV" data-fancybox="gallery" data-type="video" data-caption="Silvestr 2024">
-          <img src="/images/silvestr/PICT0112.JPG" alt="Silvestr 2024 Video" loading="lazy">
+          <video class="video-thumbnail" muted>
+            <source src="/images/silvestr/XMDK3511.MOV" type="video/quicktime">
+          </video>
         </a>
       </div>
     </div>
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script>
+    // Nastavení náhledů videí
+    document.querySelectorAll('.video-thumbnail').forEach(video => {
+      video.addEventListener('loadeddata', function() {
+        this.currentTime = 0.1; // Nastavení na první snímek
+      });
+    });
+  </script>
 </body>
 </html> 
