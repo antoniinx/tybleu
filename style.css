@@ -195,6 +195,11 @@ body {
   text-align: center;
   max-width: 400px;
   width: 90%;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-form h2 {
@@ -214,6 +219,46 @@ body {
   border-radius: 4px;
 }
 
+/* Added styles for password toggle */
+.password-input-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  background-color: #000;
+}
+
+.password-input-group input {
+  flex-grow: 1;
+  border: none;
+  margin-bottom: 0;
+  padding: 0.8rem;
+  background-color: transparent;
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+}
+
+.password-input-group input:focus {
+  outline: none;
+}
+
+.toggle-password {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.8rem;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #ff0000;
+}
+
 .login-form input:focus {
   outline: none;
   border-color: #ff0000;
@@ -230,6 +275,7 @@ body {
   border-radius: 4px;
   transition: background-color 0.3s ease;
   width: 100%;
+  margin-top: 1rem;
 }
 
 .login-form button:hover {
@@ -241,4 +287,5 @@ body {
   margin-top: 1rem;
   font-size: 1rem;
   display: none;
+  min-height: 1em;
 }
