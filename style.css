@@ -223,11 +223,22 @@ body {
 }
 
 .silvestr-password-area {
-  text-align: center;
+  display: flex;
+  align-items: center;
   margin-bottom: 2rem;
+  justify-content: center;
 }
 
 .silvestr-label {
-  font-size: 1rem;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+
+.password-form {
+  display: flex;
+  align-items: center;
+}
+
+.password-form input[type="password"] {
   margin-right: 0.5rem;
 }
