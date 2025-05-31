@@ -22,29 +22,27 @@
   <main class="content">
     <h1 class="page-title">Fotky</h1>
     <div class="gallery-section">
-      <div class="silvestr-password-area">
-        <span class="silvestr-label">Silvestr 2024:</span>
-        <input type="password" id="silvestr-password" placeholder="Zadejte heslo">
-        <button onclick="checkSilvestrPassword()">Zobrazit</button>
-      </div>
-      <div id="silvestr-error-message" class="error-message"></div>
+      <h2>Silvestr 2024</h2>
+      <form id="passwordForm" class="password-form">
+        <input type="password" id="password" placeholder="Heslo" required>
+        <button type="submit">Odemknout</button>
+      </form>
+      <div id="error" class="error-message"></div>
     </div>
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
   <script>
-    function checkSilvestrPassword() {
-      const password = document.getElementById('silvestr-password').value;
-      const errorMessage = document.getElementById('silvestr-error-message');
-
+    document.getElementById('passwordForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const password = document.getElementById('password').value;
       if (password === 'sedlcany1') {
-        window.location.href = '/silvestr2024.html'; // Redirect to the new page
+        window.location.href = '/silvestr';
       } else {
-        errorMessage.textContent = 'Nesprávné heslo!';
-        errorMessage.style.display = 'block';
+        document.getElementById('error').textContent = 'Nesprávné heslo';
       }
-    }
+    });
   </script>
 </body>
 </html> 
