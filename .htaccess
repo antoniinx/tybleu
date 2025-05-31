@@ -16,7 +16,7 @@ ErrorDocument 404 /404.html
 
 AuthType Basic
 AuthName "Silvestr 2024"
-AuthUserFile /c/_/_moje/code/tybl.eu/.htpasswd
+AuthUserFile .htpasswd
 Require valid-user
 
 <Files "silvestr2024.html">
