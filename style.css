@@ -10,7 +10,7 @@ body {
   background-color: rgba(0, 0, 0, 0.9);
   padding: 1rem 0;
   position: fixed;
-  width: 100%;
+      width: 100%;
   top: 0;
   z-index: 1000;
 }
@@ -63,7 +63,7 @@ body {
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
-}
+    }
 
 .video-section {
   text-align: center;
@@ -89,7 +89,7 @@ body {
 
 .video-thumbnail {
   max-width: 560px;
-  width: 100%;
+      width: 100%;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
@@ -99,7 +99,7 @@ body {
 }
 
 .gallery-section h2 {
-  text-align: center;
+      text-align: center;
   margin-bottom: 2rem;
   font-size: 1.5rem;
 }
@@ -138,7 +138,7 @@ body {
 .lb-data .lb-number {
   font-family: 'Press Start 2P', cursive;
   font-size: 0.8rem;
-}
+    }
 
 .lb-nav a.lb-prev,
 .lb-nav a.lb-next {
@@ -174,7 +174,7 @@ body {
 
   .silvestr-password-area {
     flex-direction: column;
-    align-items: center;
+      align-items: center;
   }
 
   .silvestr-label {
@@ -196,7 +196,7 @@ body {
   background-color: #000;
   border: 1px solid #fff;
   color: #fff;
-}
+    }
 
 .gallery-section input[type="password"]:focus {
   outline: none;
@@ -206,10 +206,10 @@ body {
 .gallery-section button {
   background-color: #ff0000;
   color: #fff;
-  border: none;
-  cursor: pointer;
+      border: none;
+      cursor: pointer;
   transition: background-color 0.3s ease;
-}
+    }
 
 .gallery-section button:hover {
   background-color: #cc0000;
@@ -225,9 +225,25 @@ body {
 .silvestr-password-area {
   text-align: center;
   margin-bottom: 2rem;
-}
+    }
 
 .silvestr-label {
   font-size: 1rem;
   margin-right: 0.5rem;
+    }
+
+.lb-dataContainer .download-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background-color: #007bff; /* A nice blue, can be changed */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.lb-dataContainer .download-button:hover {
+  background-color: #0056b3;
 }
