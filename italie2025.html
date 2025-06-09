@@ -2,193 +2,25 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Itálie 2025 - tybl.eu</title>
+  <title>itálie 2025 tybl.eu</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="icon" href="/images/icon.svg">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
-  <style>
-    :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #34495e;
-      --accent-color: #3498db;
-      --text-color: #333;
-      --light-bg: #f5f6fa;
-      --spacing: 20px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
-      color: var(--text-color);
-      background: var(--light-bg);
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--spacing);
-    }
-
-    header {
-      background: var(--primary-color);
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      color: white;
-      text-decoration: none;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.1rem;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent-color);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
-    main {
-      padding: 2rem 0;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: var(--spacing);
-      padding: var(--spacing) 0;
-    }
-
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-    }
-
-    .gallery-item:hover {
-      transform: translateY(-5px);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .gallery-item .caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 0.5rem;
-      font-size: 0.9rem;
-    }
-
-    footer {
-      background: var(--primary-color);
-      color: white;
-      text-align: center;
-      padding: 1rem 0;
-      margin-top: 2rem;
-    }
-
-    @media (max-width: 768px) {
-      .mobile-menu-btn {
-        display: block;
-      }
-
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: var(--primary-color);
-        flex-direction: column;
-        padding: 1rem;
-        gap: 1rem;
-        text-align: center;
-      }
-
-      .nav-links.active {
-        display: flex;
-      }
-
-      .nav-links a {
-        font-size: 1.2rem;
-        padding: 0.5rem;
-        display: block;
-        background: var(--secondary-color);
-        border-radius: 4px;
-      }
-
-      .gallery {
-        grid-template-columns: 1fr;
-        padding: var(--spacing);
-      }
-
-      .gallery-item img {
-        height: 250px;
-      }
-    }
-  </style>
 </head>
 <body>
-  <header>
-    <nav class="container">
+  <nav class="main-nav">
+    <div class="nav-container">
       <a href="/" class="logo">tybl.eu</a>
-      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
       <div class="nav-links">
         <a href="/s&f">s&f</a>
         <a href="/videa">videa</a>
         <a href="/fotky">fotky</a>
       </div>
-    </nav>
-  </header>
+    </div>
+  </nav>
 
-  <main class="container">
+  <main class="content">
     <h1 class="page-title">Itálie 2025</h1>
     <div class="gallery-section">
       <div class="gallery">
@@ -835,27 +667,62 @@
     </div>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2024 tybl.eu</p>
-    </div>
-  </footer>
+  <div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+    <a id="download-btn" class="download-btn" download>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Stáhnout
+    </a>
+  </div>
+
+  <style>
+    .download-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: white;
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .download-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox-plus-jquery.min.js"></script>
   <script>
-    function toggleMenu() {
-      const navLinks = document.querySelector('.nav-links');
-      navLinks.classList.toggle('active');
+    function openLightbox(img) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const downloadBtn = document.getElementById('download-btn');
+      
+      lightboxImg.src = img.src;
+      downloadBtn.href = img.src;
+      downloadBtn.download = img.src.split('/').pop();
+      lightbox.style.display = 'flex';
     }
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      const navLinks = document.querySelector('.nav-links');
-      const mobileBtn = document.querySelector('.mobile-menu-btn');
-      if (!navLinks.contains(e.target) && !mobileBtn.contains(e.target)) {
-        navLinks.classList.remove('active');
-      }
-    });
   </script>
 </body>
 </html> 
