@@ -29,6 +29,13 @@
         <button onclick="checkSilvestrPassword()">Zobrazit</button>
       </div>
       <div id="silvestr-error-message" class="error-message"></div>
+
+      <div class="silvestr-password-area">
+        <span class="silvestr-label">Itálie 2025:</span>
+        <input type="password" id="italie-password" placeholder="Zadejte heslo">
+        <button onclick="checkItaliePassword()">Zobrazit</button>
+      </div>
+      <div id="italie-error-message" class="error-message"></div>
     </div>
   </main>
 
@@ -41,6 +48,18 @@
 
       if (password === 'sedlcany1') {
         window.location.href = '/silvestr2024.html'; // Redirect to the new page
+      } else {
+        errorMessage.textContent = 'Nesprávné heslo!';
+        errorMessage.style.display = 'block';
+      }
+    }
+
+    function checkItaliePassword() {
+      const password = document.getElementById('italie-password').value;
+      const errorMessage = document.getElementById('italie-error-message');
+
+      if (password === 'bulhar') {
+        window.location.href = '/italie2025.html'; // Redirect to the new page
       } else {
         errorMessage.textContent = 'Nesprávné heslo!';
         errorMessage.style.display = 'block';
