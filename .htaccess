@@ -21,4 +21,9 @@ Require valid-user
 
 <Files "silvestr2024.html">
     Require valid-user
+</Files>
+
+<Files "italie2025.html">
+    AuthName "Itálie 2025"
+    Require valid-user
 </Files> 
