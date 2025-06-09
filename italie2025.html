@@ -85,6 +85,31 @@
             padding: 2rem 0;
         }
 
+        .album-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .album-actions button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .album-actions button:hover {
+            background: #2980b9;
+        }
+
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -131,6 +156,28 @@
 
         .gallery-item:hover .caption {
             transform: translateY(0);
+        }
+
+        .download-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 2;
+        }
+
+        .download-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
         }
 
         .lightbox {
@@ -243,6 +290,23 @@
                 font-size: 1.5rem;
                 padding: 0.8rem;
             }
+
+            .album-actions {
+                flex-direction: column;
+            }
+
+            .album-actions button {
+                width: 100%;
+                justify-content: center;
+                padding: 1rem;
+                font-size: 1.2rem;
+            }
+
+            .download-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -260,6 +324,14 @@
     </header>
 
     <main class="container">
+        <div class="album-actions">
+            <button class="download-all-btn" onclick="downloadAllPhotos()">
+                <span class="icon">⬇️</span> Stáhnout celé album
+            </button>
+            <button class="upload-gdrive-btn" onclick="uploadToGoogleDrive()">
+                <span class="icon">☁️</span> Nahrát na Google Drive
+            </button>
+        </div>
         <div class="gallery">
             <!-- Gallery items will be added here -->
         </div>
@@ -315,9 +387,19 @@
             const caption = document.createElement('div');
             caption.className = 'caption';
             caption.textContent = alt;
+
+            const downloadBtn = document.createElement('button');
+            downloadBtn.className = 'download-btn';
+            downloadBtn.innerHTML = '⬇️';
+            downloadBtn.setAttribute('aria-label', 'Stáhnout fotku');
+            downloadBtn.onclick = (e) => {
+                e.stopPropagation();
+                downloadPhoto(src, alt);
+            };
             
             item.appendChild(img);
             item.appendChild(caption);
+            item.appendChild(downloadBtn);
             
             item.addEventListener('click', () => {
                 currentImageIndex = images.indexOf(src);
@@ -386,6 +468,58 @@
             images.push(src);
             gallery.appendChild(createGalleryItem(src, alt));
         });
+
+        async function downloadPhoto(src, alt) {
+            try {
+                const response = await fetch(src);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = alt.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.jpg';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (error) {
+                console.error('Chyba při stahování fotky:', error);
+                alert('Nepodařilo se stáhnout fotku. Zkuste to prosím znovu.');
+            }
+        }
+
+        async function downloadAllPhotos() {
+            const zip = new JSZip();
+            const loadingAlert = alert('Začínám stahovat celé album. Prosím čekejte...');
+            
+            try {
+                for (let i = 0; i < images.length; i++) {
+                    const response = await fetch(images[i]);
+                    const blob = await response.blob();
+                    const filename = `italie_2025_${i + 1}.jpg`;
+                    zip.file(filename, blob);
+                }
+                
+                const content = await zip.generateAsync({type: 'blob'});
+                const url = window.URL.createObjectURL(content);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'italie_2025_album.zip';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (error) {
+                console.error('Chyba při stahování alba:', error);
+                alert('Nepodařilo se stáhnout album. Zkuste to prosím znovu.');
+            }
+        }
+
+        async function uploadToGoogleDrive() {
+            alert('Tato funkce bude brzy dostupná. Zatím můžete použít tlačítko pro stažení celého alba.');
+        }
     </script>
+
+    <!-- Add JSZip library for ZIP file creation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </body>
 </html> 
