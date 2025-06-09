@@ -7,6 +7,48 @@
   <link rel="icon" href="/images/icon.svg">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+  <style>
+    .photo-preview {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      margin: 10px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .download-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+      z-index: 2;
+    }
+    .download-btn:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+    .download-all-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 20px 0;
+      transition: background 0.3s;
+    }
+    .download-all-btn:hover {
+      background: #45a049;
+    }
+  </style>
 </head>
 <body>
   <nav class="main-nav">
@@ -21,7 +63,10 @@
   </nav>
 
   <main class="content">
-    <h1 class="page-title">Itálie 2025</h1>
+    <div class="album-title">
+      <h1>Itálie 2025</h1>
+      <button class="download-all-btn" onclick="downloadAll()">Stáhnout vše</button>
+    </div>
     <div class="gallery-section">
       <div class="gallery">
         <a href="/images/italie/PICT0135.JPG" data-lightbox="italie" data-title="Itálie 2025">
@@ -667,7 +712,72 @@
     </div>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
-  <script src="gallery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox-plus-jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script>
+    function createPhotoPreview(photo) {
+      const preview = document.createElement('div');
+      preview.className = 'photo-preview';
+      
+      const img = document.createElement('img');
+      img.src = photo;
+      img.alt = 'Photo preview';
+      img.onclick = () => showFullPhoto(photo);
+      
+      const downloadBtn = document.createElement('button');
+      downloadBtn.className = 'download-btn';
+      downloadBtn.textContent = 'Stáhnout';
+      downloadBtn.onclick = (e) => {
+        e.stopPropagation();
+        downloadPhoto(photo);
+      };
+      
+      preview.appendChild(img);
+      preview.appendChild(downloadBtn);
+      return preview;
+    }
+
+    function downloadPhoto(photoUrl) {
+      const link = document.createElement('a');
+      link.href = photoUrl;
+      link.download = photoUrl.split('/').pop();
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function downloadAll() {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        // On mobile, download photos individually
+        photos.forEach(photo => {
+          downloadPhoto(photo);
+        });
+      } else {
+        // On desktop, create and download a zip file
+        const zip = new JSZip();
+        const promises = photos.map(photo => {
+          return fetch(photo)
+            .then(response => response.blob())
+            .then(blob => {
+              const filename = photo.split('/').pop();
+              zip.file(filename, blob);
+            });
+        });
+
+        Promise.all(promises).then(() => {
+          zip.generateAsync({type: 'blob'}).then(content => {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = 'italie2025.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          });
+        });
+      }
+    }
+  </script>
 </body>
 </html> 
