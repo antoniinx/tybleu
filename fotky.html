@@ -2,43 +2,50 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fotky - Tybl.eu</title>
+  <title>fotky tybl.eu</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="icon" href="/images/icon.svg">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="index.html">Domů</a>
-      <a href="fotky.html">Fotky</a>
-      <a href="videa.html">Videa</a>
-    </nav>
-  </header>
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="/" class="logo">tybl.eu</a>
+      <div class="nav-links">
+        <a href="/shakes.html">s&f</a>
+        <a href="/videa">videa</a>
+        <a href="/fotky">fotky</a>
+      </div>
+    </div>
+  </nav>
 
-  <main>
-    <h1>Fotogalerie</h1>
-    <div class="photo-albums">
-      <div class="album">
-        <h2>Silvestr 2024</h2>
-        <p>Fotky ze silvestrovské oslavy 2024</p>
-        <a href="silvestr2024.html" class="button">Zobrazit album</a>
+  <main class="content">
+    <h1 class="page-title">Fotky</h1>
+    <div class="gallery-section">
+      <div class="silvestr-password-area">
+        <span class="silvestr-label">Silvestr 2024:</span>
+        <input type="password" id="silvestr-password" placeholder="Zadejte heslo">
+        <button onclick="checkSilvestrPassword()">Zobrazit</button>
       </div>
-      <div class="album">
-        <h2>Itálie 2025</h2>
-        <p>Fotky z dovolené v Itálii 2025</p>
-        <a href="italie2025.html" class="button">Zobrazit album</a>
-      </div>
+      <div id="silvestr-error-message" class="error-message"></div>
     </div>
   </main>
 
-  <footer>
-    <p>&copy; 2024 Tybl.eu</p>
-  </footer>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  <script>
+    function checkSilvestrPassword() {
+      const password = document.getElementById('silvestr-password').value;
+      const errorMessage = document.getElementById('silvestr-error-message');
+
+      if (password === 'sedlcany1') {
+        window.location.href = '/silvestr2024.html'; // Redirect to the new page
+      } else {
+        errorMessage.textContent = 'Nesprávné heslo!';
+        errorMessage.style.display = 'block';
+      }
+    }
+  </script>
 </body>
 </html> 
