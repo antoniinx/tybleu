@@ -231,19 +231,3 @@ body {
   font-size: 1rem;
   margin-right: 0.5rem;
     }
-
-.lb-dataContainer .download-button {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 15px;
-  background-color: #007bff; /* A nice blue, can be changed */
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.lb-dataContainer .download-button:hover {
-  background-color: #0056b3;
-}
