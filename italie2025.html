@@ -1,672 +1,391 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <title>itálie 2025 tybl.eu</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="icon" href="/images/icon.svg">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itálie 2025 - tybl.eu</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --light-bg: #f5f6fa;
+            --spacing: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--light-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        header {
+            background: var(--primary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing);
+            padding: var(--spacing) 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            aspect-ratio: 4/3;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .caption {
+            transform: translateY(0);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+
+        .lightbox-nav button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .lightbox-nav button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary-color);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 0.8rem;
+                font-size: 1.2rem;
+                text-align: center;
+                background: var(--secondary-color);
+                border-radius: 8px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .lightbox {
+                padding: 1rem;
+            }
+
+            .lightbox-nav button {
+                font-size: 1.5rem;
+                padding: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <nav class="main-nav">
-    <div class="nav-container">
-      <a href="/" class="logo">tybl.eu</a>
-      <div class="nav-links">
-        <a href="/s&f">s&f</a>
-        <a href="/videa">videa</a>
-        <a href="/fotky">fotky</a>
-      </div>
-    </div>
-  </nav>
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">tybl.eu</a>
+            <button class="mobile-menu-btn" aria-label="Menu">☰</button>
+            <div class="nav-links">
+                <a href="/s&f">s&f</a>
+                <a href="/videa">videa</a>
+                <a href="/fotky">fotky</a>
+            </div>
+        </nav>
+    </header>
 
-  <main class="content">
-    <h1 class="page-title">Itálie 2025</h1>
-    <div class="gallery-section">
-      <div class="gallery">
-        <a href="/images/italie/PICT0135.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0135.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0136.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0136.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0137.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0137.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0138.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0138.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0139.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0139.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0140.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0140.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0141.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0141.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0142.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0142.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0143.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0143.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0144.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0144.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0145.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0145.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0146.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0146.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0147.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0147.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0148.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0148.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0149.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0149.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0150.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0150.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0151.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0151.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0152.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0152.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0153.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0153.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0154.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0154.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0155.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0155.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0156.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0156.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0157.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0157.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0158.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0158.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0159.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0159.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0160.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0160.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0161.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0161.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0162.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0162.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0163.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0163.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0164.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0164.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0165.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0165.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0166.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0166.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0167.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0167.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0168.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0168.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0169.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0169.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0170.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0170.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0171.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0171.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0172.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0172.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0173.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0173.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0174.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0174.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0175.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0175.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0176.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0176.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0177.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0177.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0178.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0178.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0179.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0179.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0180.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0180.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0181.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0181.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0182.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0182.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0183.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0183.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0184.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0184.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0185.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0185.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0186.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0186.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0187.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0187.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0188.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0188.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0189.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0189.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0190.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0190.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0191.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0191.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0192.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0192.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0193.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0193.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0194.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0194.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0195.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0195.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0196.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0196.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0197.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0197.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0198.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0198.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0199.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0199.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0200.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0200.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0201.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0201.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0202.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0202.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0203.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0203.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0204.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0204.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0205.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0205.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0206.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0206.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0207.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0207.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0208.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0208.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0209.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0209.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0210.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0210.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0211.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0211.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0212.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0212.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0213.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0213.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0214.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0214.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0215.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0215.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0216.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0216.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0217.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0217.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0218.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0218.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0219.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0219.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0220.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0220.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0221.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0221.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0222.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0222.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0223.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0223.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0224.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0224.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0225.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0225.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0226.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0226.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0227.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0227.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0228.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0228.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0229.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0229.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0230.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0230.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0231.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0231.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0232.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0232.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0233.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0233.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0234.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0234.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0235.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0235.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0236.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0236.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0237.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0237.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0238.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0238.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0239.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0239.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0240.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0240.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0241.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0241.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0242.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0242.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0243.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0243.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0244.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0244.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0245.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0245.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0246.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0246.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0247.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0247.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0248.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0248.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0249.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0249.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0250.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0250.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0251.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0251.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0252.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0252.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0253.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0253.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0254.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0254.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0255.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0255.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0256.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0256.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0257.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0257.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0258.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0258.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0259.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0259.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0260.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0260.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0261.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0261.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0262.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0262.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0263.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0263.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0264.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0264.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0265.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0265.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0266.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0266.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0267.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0267.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0268.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0268.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0269.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0269.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0270.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0270.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0271.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0271.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0272.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0272.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0273.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0273.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0274.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0274.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0275.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0275.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0276.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0276.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0277.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0277.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0278.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0278.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0279.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0279.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0280.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0280.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0281.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0281.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0282.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0282.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0283.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0283.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0284.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0284.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0285.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0285.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0286.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0286.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0287.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0287.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0288.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0288.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0289.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0289.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0290.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0290.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0291.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0291.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0292.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0292.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0293.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0293.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0294.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0294.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0295.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0295.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0296.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0296.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0297.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0297.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0298.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0298.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0299.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0299.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0300.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0300.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0301.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0301.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0302.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0302.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0303.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0303.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0304.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0304.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0305.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0305.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0306.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0306.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0307.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0307.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0308.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0308.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0309.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0309.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0310.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0310.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0311.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0311.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0312.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0312.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0313.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0313.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0314.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0314.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0315.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0315.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0316.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0316.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0317.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0317.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0318.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0318.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0319.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0319.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0320.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0320.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0321.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0321.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0322.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0322.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0323.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0323.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0324.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0324.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0325.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0325.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0326.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0326.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0327.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0327.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0328.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0328.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0329.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0329.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0330.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0330.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0331.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0331.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0332.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0332.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0333.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0333.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0334.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0334.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0335.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0335.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0336.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0336.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0337.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0337.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0338.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0338.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0339.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0339.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0340.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0340.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0341.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0341.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0342.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0342.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0343.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0343.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0344.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0344.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0345.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0345.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0346.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0346.JPG" alt="Itálie 2025">
-        </a>
-        <a href="/images/italie/PICT0347.JPG" data-lightbox="italie" data-title="Itálie 2025">
-          <img src="/images/italie/PICT0347.JPG" alt="Itálie 2025">
-        </a>
-      </div>
-    </div>
-  </main>
+    <main class="container">
+        <div class="gallery">
+            <!-- Gallery items will be added here -->
+        </div>
+    </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox-plus-jquery.min.js"></script>
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="Close">×</button>
+            <img src="" alt="">
+            <div class="lightbox-nav">
+                <button class="lightbox-prev" aria-label="Previous">❮</button>
+                <button class="lightbox-next" aria-label="Next">❯</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Gallery and lightbox functionality
+        const gallery = document.querySelector('.gallery');
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const closeBtn = lightbox.querySelector('.lightbox-close');
+        const prevBtn = lightbox.querySelector('.lightbox-prev');
+        const nextBtn = lightbox.querySelector('.lightbox-next');
+        let currentImageIndex = 0;
+        let images = [];
+
+        // Function to create gallery items
+        function createGalleryItem(src, alt) {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = alt;
+            img.loading = 'lazy';
+            
+            const caption = document.createElement('div');
+            caption.className = 'caption';
+            caption.textContent = alt;
+            
+            item.appendChild(img);
+            item.appendChild(caption);
+            
+            item.addEventListener('click', () => {
+                currentImageIndex = images.indexOf(src);
+                updateLightbox();
+            });
+            
+            return item;
+        }
+
+        // Function to update lightbox
+        function updateLightbox() {
+            lightboxImg.src = images[currentImageIndex];
+            lightboxImg.alt = `Image ${currentImageIndex + 1}`;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Navigation in lightbox
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateLightbox();
+        }
+
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateLightbox();
+        }
+
+        // Event listeners
+        closeBtn.addEventListener('click', closeLightbox);
+        prevBtn.addEventListener('click', showPrevImage);
+        nextBtn.addEventListener('click', showNextImage);
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                showPrevImage();
+            } else if (e.key === 'ArrowRight') {
+                showNextImage();
+            }
+        });
+
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Add images to gallery
+        const imageFiles = [
+            // Your image files will be added here
+        ];
+
+        imageFiles.forEach((file, index) => {
+            const src = `images/italie/${file}`;
+            const alt = `Itálie 2025 - ${index + 1}`;
+            images.push(src);
+            gallery.appendChild(createGalleryItem(src, alt));
+        });
+    </script>
 </body>
 </html> 
